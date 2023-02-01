@@ -1,6 +1,7 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
+    <q-btn color="primary" icon="check" label="OK" @click="onClick" />
   </div>
 </template>
 
