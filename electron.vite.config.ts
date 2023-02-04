@@ -1,11 +1,12 @@
 import { builtinModules } from 'module';
+import legacy from '@vitejs/plugin-legacy'
 
 export default {
   root: __dirname,         // 指向主进程目录
   build: {
     outDir: 'dist/',
     lib: {
-      entry: 'electron_main.js',   // Electron 目前只支持 CommonJs 格式
+      entry: 'server/server.ts',   // Electron 目前只支持 CommonJs 格式
       formats: ['cjs'],
       fileName: () => '[name].cjs',
     },
@@ -15,6 +16,12 @@ export default {
         ...builtinModules,
       ],
     },
+    plugins: [
+      legacy({
+        targets: ['defaults', 'not IE 11']
+      })
+    ]
+    //emptyOutDir: false,
   },
 }
 

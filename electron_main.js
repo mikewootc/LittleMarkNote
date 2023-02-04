@@ -1,6 +1,9 @@
 const { app, BrowserWindow } = require('electron')
 const path = require('path')
 
+//import { startServer } from './server/server';
+const { startServer } = require('./server.cjs');
+
 function createWindow () {
   const win = new BrowserWindow({
     width: 800,
@@ -26,3 +29,5 @@ app.on('window-all-closed', () => {
     app.quit()
   }
 });
+
+startServer();
