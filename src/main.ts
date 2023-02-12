@@ -4,9 +4,10 @@ import { Quasar } from 'quasar'
 import quasarLang from 'quasar/lang/zh-CN'
 
 import App from './App.vue';
-import LittleUi from './little-ui/index.ts';
+import LittleUi from './little-ui/index';
 
 // Import icon libraries
+// https://fonts.google.com/icons?icon.set=Material+Icons
 import '@quasar/extras/material-icons/material-icons.css'
 
 // Import Quasar css

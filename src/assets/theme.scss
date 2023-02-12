@@ -1,10 +1,13 @@
 $general-icon-button-size: 40px;
+$general-bgc: #f6f6f6;
 
 .general-icon-button {
   width: $general-icon-button-size;
   height: $general-icon-button-size;
+  color: #606060;
 }
 
 .main-menu__container {
   width: $general-icon-button-size;
+  background-color: $general-bgc;
 }

@@ -5,7 +5,7 @@ defineProps<{
 </script>
 
 <template>
-  <q-btn flat round :icon="icon" class="general-icon-button" />
+  <q-btn label="Primary" />
 </template>
 
 <style>

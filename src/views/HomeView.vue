@@ -16,10 +16,10 @@ import MainMenu from '../components/MainMenu.vue'
   display: flex;
   flex-direction: row;
   /* align-items: center; */
-  background-color: #224466;
+  /* background-color: #224466; */
 }
 
 .general-icon-button {
-  background-color: #cc5599;
+  /* background-color: #cc5599; */
 }
 </style>
