@@ -5,7 +5,7 @@ defineProps<{
 </script>
 
 <template>
-  <q-btn label="Primary" />
+  <q-btn label="Primary" style="height: 36px;" />
 </template>
 
 <style>

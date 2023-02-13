@@ -1,9 +1,21 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useI18n } from "vue-i18n";
+
 //defineProps<{
 //  msg: string
 //}>()
 const confirm = ref(true);
+
+const { locale } = useI18n({ useScope: "global" });
+function changeLanguage() {
+  if (locale.value == 'en-US') {
+    locale.value = 'zh-CN';
+  } else {
+    locale.value = 'en-US';
+  }
+}
+
 </script>
 
 <template>
@@ -16,11 +28,18 @@ const confirm = ref(true);
       </div>
 
       <div class="splash">
-        <li-list-item title="Here might be a page title" content="Here might be a page content">
-          <template #right>
-            <li-button style="width: 100px;" color="primary" label="创建" class="general-icon-button" />
-          </template>
-        </li-list-item>
+
+        <div class=" open-vault-options mod-open-vault">
+          <li-list-item class="setting-item" :title="$t('starter.vault.create.title')" :description="$t('starter.vault.create.description')">
+            <template #right> <li-button style="width: 100px;" color="primary" :label="$t('starter.vault.create.buttonLabel')" class="general-icon-button" /> </template>
+          </li-list-item>
+
+          <li-list-item class="setting-item" :title="$t('starter.vault.open.title')" :description="$t('starter.vault.open.description')">
+            <template #right> <li-button style="width: 100px;" color="primary" :label="$t('starter.vault.open.buttonLabel')" class="general-icon-button" /> </template>
+          </li-list-item>
+
+          <li-button style="width: 100px;" color="primary" :label="$t('langName')" class="general-icon-button" @click="changeLanguage" />
+        </div>
       </div>
     </div>
   </div>
@@ -29,7 +48,7 @@ const confirm = ref(true);
 <style scoped>
 .start-screen-inner {
   width: 800px;
-  max-width: 85vw;
+  max-width: 90vw;
   height: 650px;
   background-color: #fff;
 
@@ -57,4 +76,18 @@ const confirm = ref(true);
   padding-top: 36px;
   /* background-color: #f0f; */
 }
+
+.open-vault-options {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 12px 36px;
+    text-align: left;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
 </style>
