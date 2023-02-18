@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useI18n } from "vue-i18n";
+import { useI18n } from 'vue-i18n';
 import logoUrl from '@/assets/images/logo_unicorn_color.svg';
 
 //defineProps<{
@@ -8,7 +8,7 @@ import logoUrl from '@/assets/images/logo_unicorn_color.svg';
 //}>()
 const confirm = ref(true);
 
-const { locale } = useI18n({ useScope: "global" });
+const { locale } = useI18n({ useScope: 'global' });
 function changeLanguage() {
   if (locale.value == 'en-US') {
     locale.value = 'zh-CN';
@@ -16,12 +16,11 @@ function changeLanguage() {
     locale.value = 'en-US';
   }
 
-  // vue-ignore
-  const a = (hello) => {
-    console.log();
+  // prettier-ignore
+  const a =             (hello) => {
+          console.log();
   }
 }
-
 </script>
 
 <!-- Open/Create vaults -->
@@ -29,33 +28,30 @@ function changeLanguage() {
   <div class="the-starter__container" style="max-width: 85vw">
     <div class="start-screen-inner">
       <div class="recent-vaults">
-        <div class="recent-vaults-list">
-        </div>
+        <div class="recent-vaults-list"></div>
       </div>
 
       <div class="splash">
         <!-- <li-icon-svg></li-icon-svg> -->
 
         <div class=""></div>
-        <li-icon-svg :srcUrl="logoUrl" style="width: 100px; height: 100px;"></li-icon-svg>
-        <p style="font-size: 30px;">############# Little Mark Note</p>
+        <li-icon-svg :srcUrl="logoUrl" style="width: 100px; height: 100px"></li-icon-svg>
+        <p style="font-size: 30px">############# Little Mark Note</p>
 
-        <div class=" open-vault-options mod-open-vault">
-          <li-list-item class="setting-item" :title="$t('starter.vault.create.title')"
-            :description="$t('starter.vault.create.description')">
-            <template #right> <li-button style="width: 100px;" color="primary"
-                :label="$t('starter.vault.create.buttonLabel')" class="general-icon-button" /> </template>
+        <div class="open-vault-options mod-open-vault">
+          <li-list-item class="setting-item" :title="$t('starter.vault.create.title')" :description="$t('starter.vault.create.description')">
+            <template #right>
+              <li-button style="width: 100px" color="primary" :label="$t('starter.vault.create.buttonLabel')" class="general-icon-button" />
+            </template>
           </li-list-item>
 
-          <li-list-item class="setting-item" :title="$t('starter.vault.open.title')"
-            :description="$t('starter.vault.open.description')">
-            <template #right> <li-button style="width: 100px;" color="primary"
-                :label="$t('starter.vault.open.buttonLabel')" class="general-icon-button" /> </template>
+          <li-list-item class="setting-item" :title="$t('starter.vault.open.title')" :description="$t('starter.vault.open.description')">
+            <template #right>
+              <li-button style="width: 100px" color="primary" :label="$t('starter.vault.open.buttonLabel')" class="general-icon-button" />
+            </template>
           </li-list-item>
 
-          <li-button style="width: 100px;" color="primary" :label="$t('langName')" class="general-icon-button"
-            @click="changeLanguage" />
-
+          <li-button style="width: 100px" color="primary" :label="$t('langName')" class="general-icon-button" @click="changeLanguage" />
         </div>
       </div>
     </div>
