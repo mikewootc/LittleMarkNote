@@ -2,32 +2,30 @@
 import { ref } from 'vue';
 import { useI18n } from "vue-i18n";
 import logoUrl from '@/assets/images/logo_unicorn_color.svg';
-import MyFilleExplorer from './MyFilleExplorer.vue';
 
 //defineProps<{
 //  msg: string
 //}>()
-let isShowFileExplorer = ref(false);
+const confirm = ref(true);
 
 const { locale } = useI18n({ useScope: "global" });
-
 function changeLanguage() {
   if (locale.value == 'en-US') {
     locale.value = 'zh-CN';
   } else {
     locale.value = 'en-US';
   }
-}
 
-function showFileExplorer() {
-  console.log('showFileExplorer');
-  isShowFileExplorer.value = true;
+  // vue-ignore
+  const a = (hello) => {
+    console.log();
+  }
 }
 
 </script>
 
+<!-- Open/Create vaults -->
 <template>
-  <!-- Open/Create vaults -->
   <div class="the-starter__container" style="max-width: 85vw">
     <div class="start-screen-inner">
       <div class="recent-vaults">
@@ -40,22 +38,23 @@ function showFileExplorer() {
 
         <div class=""></div>
         <li-icon-svg :srcUrl="logoUrl" style="width: 100px; height: 100px;"></li-icon-svg>
-        <p style="font-size: 30px;">Little Mark Note</p>
+        <p style="font-size: 30px;">############# Little Mark Note</p>
 
         <div class=" open-vault-options mod-open-vault">
-          <li-list-item class="setting-item" :title="$t('starter.vault.create.title')" :description="$t('starter.vault.create.description')">
-            <template #right> <li-button style="width: 100px;" color="primary" :label="$t('starter.vault.create.buttonLabel')" class="general-icon-button" /> </template>
+          <li-list-item class="setting-item" :title="$t('starter.vault.create.title')"
+            :description="$t('starter.vault.create.description')">
+            <template #right> <li-button style="width: 100px;" color="primary"
+                :label="$t('starter.vault.create.buttonLabel')" class="general-icon-button" /> </template>
           </li-list-item>
 
-          <li-list-item class="setting-item" :title="$t('starter.vault.open.title')" :description="$t('starter.vault.open.description')">
-            <template #right> <li-button style="width: 100px;" color="primary" :label="$t('starter.vault.open.buttonLabel')" class="general-icon-button" :click="showFileExplorer" /> </template>
+          <li-list-item class="setting-item" :title="$t('starter.vault.open.title')"
+            :description="$t('starter.vault.open.description')">
+            <template #right> <li-button style="width: 100px;" color="primary"
+                :label="$t('starter.vault.open.buttonLabel')" class="general-icon-button" /> </template>
           </li-list-item>
 
-          <li-button style="width: 100px;" color="primary" :label="$t('langName')" class="general-icon-button" @click="changeLanguage" />
-
-          <q-dialog v-model="isShowFileExplorer" class="starter__dialog">
-            <MyFilleExplorer></MyFilleExplorer>
-          </q-dialog>
+          <li-button style="width: 100px;" color="primary" :label="$t('langName')" class="general-icon-button"
+            @click="changeLanguage" />
 
         </div>
       </div>
@@ -73,6 +72,7 @@ function showFileExplorer() {
   display: flex;
   flex-direction: row;
 }
+
 .recent-vaults {
   width: 280px;
   height: 100%;
@@ -105,16 +105,15 @@ function showFileExplorer() {
 }
 
 .open-vault-options {
-    /* position: absolute; */
-    /* top: 0; */
-    /* left: 0; */
-    width: 100%;
-    height: 100%;
-    padding: 12px 36px;
-    text-align: left;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
+  /* position: absolute; */
+  /* top: 0; */
+  /* left: 0; */
+  width: 100%;
+  height: 100%;
+  padding: 12px 36px;
+  text-align: left;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
-
 </style>

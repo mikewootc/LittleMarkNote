@@ -14,12 +14,12 @@ const confirm = ref(true);
     <div class="main-menu__plugin-button-list">
     </div>
     <div class="main-menu__main-button-list">
-      <li-icon-button icon="import_contacts" @click="confirm=true"></li-icon-button>
+      <li-icon-button icon="import_contacts" @click="confirm = true"></li-icon-button>
       <li-icon-button icon="settings"></li-icon-button>
     </div>
 
     <!-- Open/Create vaults -->
-    <q-dialog v-model="confirm">
+    <q-dialog v-model="confirm" class="starter__dialog">
       <TheStarter></TheStarter>
     </q-dialog>
 
@@ -27,7 +27,6 @@ const confirm = ref(true);
 </template>
 
 <style scoped>
-
 .main-menu__container {
   /* width: 100px; */
   height: 100%;
@@ -59,4 +58,7 @@ const confirm = ref(true);
   align-items: center;
 }
 
+.starter__dialog {
+  /* max-width: 90vw; */
+}
 </style>
