@@ -5,24 +5,28 @@ import TheStarter from './TheStarter.vue';
 //defineProps<{
 //  msg: string
 //}>()
-const confirm = ref(true);
+const isShowStarter = ref(false);
 </script>
 
 <template>
   <div class="main-menu__container">
     <q-btn flat round color="primary" icon="card_giftcard" class="general-icon-button" />
-    <div class="main-menu__plugin-button-list">
-    </div>
+    <div class="main-menu__plugin-button-list"></div>
     <div class="main-menu__main-button-list">
-      <li-icon-button icon="import_contacts" @click="confirm = true"></li-icon-button>
+      <li-icon-button icon="import_contacts" @click="isShowStarter = true"></li-icon-button>
       <li-icon-button icon="settings"></li-icon-button>
     </div>
 
     <!-- Open/Create vaults -->
-    <q-dialog v-model="confirm" class="starter__dialog">
+    <q-dialog v-model="isShowStarter" class="starter__dialog">
       <TheStarter></TheStarter>
     </q-dialog>
-
+    <!-- 
+    <q-dialog :modelValue="true" class="starter__dialog">
+      <lm-confirm-box title="Input dir name">
+        <slot></slot>
+      </lm-confirm-box>
+    </q-dialog> -->
   </div>
 </template>
 

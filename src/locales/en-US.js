@@ -20,5 +20,9 @@ export default {
         buttonLabel : 'Sign in                                          ',
       },
     }
+  },
+  buttonLabel: {
+    confirm         : 'Confirm',
+    cancel          : 'Cancel',
   }
 }

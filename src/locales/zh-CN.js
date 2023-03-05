@@ -19,5 +19,12 @@ export default {
         buttonLabel : '登录',
       },
     }
-  }
+  },
+  buttonLabel: {
+    confirm         : '确定',
+    cancel          : '取消',
+  },
+  fileSelector: {
+    newDirHolder    : '输入文件夹名称',
+  },
 };

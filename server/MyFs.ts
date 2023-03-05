@@ -48,6 +48,16 @@ export default class MyFs {
     }
   }
 
+  static async createDir(parentPath: string, dirName: string, options?: Object) {
+    try {
+      fse.mkdirSync(path.join(parentPath, dirName), { recursive: false });
+      console.log('Folder created successfully!');
+    } catch (err) {
+      console.error(err);
+      throw err;
+    }
+  }
+
   static async homeDir(dirPath) {}
 
   static getWinDrives = () => {

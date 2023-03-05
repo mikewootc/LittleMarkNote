@@ -8,7 +8,8 @@ const logger = Logger.createWrapper('MyFsClient', Logger.LEVEL_DEBUG);
 
 const BASE_ADDR = '/';
 const fsUrls = {
-  browseDir: BASE_ADDR + 'fs/browse-dir'
+  browseDir: BASE_ADDR + 'fs/browse-dir',
+  createDir: BASE_ADDR + 'fs/create-dir',
 };
 const FS_DIR = 'fs/';
 
@@ -28,6 +29,19 @@ export default class MyFsClient {
       }
     } catch (error) {
       logger.error('browseDir_ error:', error);
+      throw error;
+    }
+  }
+
+  static async createDir(parentPath: string, name: string): Promise<void> {
+    try {
+      logger.debug('createDir_:', parentPath, name);
+      let res = await MyHttpClient.post(fsUrls.createDir, { parentPath, name });
+      if (res.data?.errCode != 0) {
+        throw Error(res.data.message);
+      }
+    } catch (error) {
+      logger.error('createDir_ error:', error);
       throw error;
     }
   }

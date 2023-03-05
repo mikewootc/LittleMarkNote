@@ -1,3 +1,7 @@
+<template>
+  <img :src="srcUrl" :onload="onLoadSvg" />
+</template>
+
 <script setup lang="ts">
 // @ts-ignore
 import SVGInject from '@iconfu/svg-inject';
@@ -12,13 +16,9 @@ function onLoadSvg(event: any) {
     beforeInject(img: any, svg: any) {
       //console.log('beforeInject', img, svg);
       svg.setAttribute('fill', props.fill);
-    }
+    },
   });
 }
 </script>
-
-<template>
-  <img :src="srcUrl" :onload="onLoadSvg" />
-</template>
 
 <style></style>

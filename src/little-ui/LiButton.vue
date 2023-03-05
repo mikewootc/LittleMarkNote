@@ -1,12 +1,11 @@
-<script setup lang="ts">
-defineProps<{
-  icon?: string
-}>()
-</script>
-
 <template>
-  <q-btn label="Primary" style="height: 36px;" />
+  <q-btn :icon="icon" label="li-button" style="height: 36px" />
 </template>
 
-<style>
-</style>
+<script setup lang="ts">
+defineProps<{
+  icon?: string;
+}>();
+</script>
+
+<style></style>

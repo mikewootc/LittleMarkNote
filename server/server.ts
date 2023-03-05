@@ -16,12 +16,23 @@ export async function startServer() {
 
   server.post('/fs/browse-dir', async (req, res) => {
     try {
-      console.log('req.body 2:', req.body);
+      console.log('req:', req.body);
       let dirInfo = await MyFs.browseDir(req.body.path);
       res.json(dirInfo);
     } catch (error) {
       logger.error('/fs/browse-dir:', error);
-      //throw error;
+      res.json({code: '1'});
+    }
+  });
+
+  server.post('/fs/create-dir', async (req, res) => {
+    try {
+      console.log('req:', req);
+      let ret = await MyFs.createDir(req.body.parentPath, req.body.dirName);
+      res.json(ret);
+    } catch (error) {
+      logger.error('/fs/create-dir:', error);
+      res.json({code: '2'});
     }
   });
 

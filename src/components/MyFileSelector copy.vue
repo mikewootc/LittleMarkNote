@@ -1,25 +1,26 @@
 <!-- Open/Create vaults -->
 <template>
-  <div class="selected-folder-line">
-    <p class="file-selector-selected-folder">{{ selectedFolder }}</p>
-    <li-button flat icon="create_new_folder" label="" class="file-selector-new-folder" @click="onClickCreateNewDir"></li-button>
-  </div>
-  <div class="file-selector-dir-tree">
-    <!-- prettier-ignore -->
-    <q-tree ref="treeRef" v-model:selected="selectedKey" label-key="name" node-key="path" :nodes="folderTree" dense
-        accordion default-expand-all style="width: 100%" @lazy-load="onLazyLoad" @update:selected="onSelectedFolder">
-        <template v-slot:default-header="prop">
-          <div class="row items-center">
-            <q-icon class="q-mr-sm" :name="prop.node.icon" :style="{ color: prop.node.iconColor }" outline size="20px" />
-            <div>{{ prop.node.name }}</div>
-          </div>
-        </template>
-      </q-tree>
-  </div>
+  <div class="file-selector-container" style="max-width: 85vw">
+    <div class="file-selector-inner">
+      <lm-title-bar title="Open Folder or File"></lm-title-bar>
 
-  <lm-confirm-dialog v-model="isShowNewDirModal" :onConfirm="createDir(selectedFolder, newDirName)">
-    <li-input v-model="newDirName" :label="$t('fileSelector.newDirHolder')" style="width: 400px; height: 300px; background-color: #ff0"></li-input>
-  </lm-confirm-dialog>
+      <div class="selected-folder-line">
+        <p class="file-selector-selected-folder">{{ selectedFolder }}</p>
+        <li-button flat icon="create_new_folder" label="" class="file-selector-new-folder"></li-button>
+      </div>
+      <div class="file-selector-dir-tree">
+        <!-- prettier-ignore -->
+        <q-tree ref="treeRef" v-model:selected="selectedKey" label-key="name" node-key="path" :nodes="folderTree" dense accordion default-expand-all style="width: 100%" @lazy-load="onLazyLoad" @update:selected="onSelectedFolder">
+          <template v-slot:default-header="prop">
+            <div class="row items-center">
+              <q-icon class="q-mr-sm" :name="prop.node.icon" :style=" { color: prop.node.iconColor } " outline size="20px" />
+              <div>{{ prop.node.name }}</div>
+            </div>
+          </template>
+        </q-tree>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -30,8 +31,7 @@ import Logger from 'cpclog';
 import logoUrl from '@/assets/images/logo_unicorn_color.svg';
 import MyFsClient from '../models/MyFsClient';
 import type { MyFileInfo } from '../../common/MyFsTypes';
-import LmConfirmBox from './LmConfirmBox.vue';
-import LmConfirmDialog from './LmConfirmDialog.vue';
+import LmTitleBar from './LmTitleBar.vue';
 
 const logger = Logger.createWrapper('MyFilleSelector', Logger.LEVEL_DEBUG);
 
@@ -42,8 +42,6 @@ const confirm = ref(true);
 let folderTree = reactive([]);
 let selectedKey = reactive([]);
 let selectedFolder = ref('/');
-let newDirName = ref('');
-let isShowNewDirModal = ref(false);
 
 const { locale } = useI18n({ useScope: 'global' });
 
@@ -59,9 +57,16 @@ onMounted(async () => {
   }
 });
 
-function onClickCreateNewDir() {
-  logger.debug('onClickCreateNewDir_', isShowNewDirModal.value);
-  isShowNewDirModal.value = true;
+function changeLanguage() {
+  if (locale.value == 'en-US') {
+    locale.value = 'zh-CN';
+  } else {
+    locale.value = 'en-US';
+  }
+
+  const a = (hello: string) => {
+    console.log();
+  };
 }
 
 async function onSelectedFolder(absolutePath: string) {
@@ -116,17 +121,6 @@ async function browseDir(path: string) {
     throw error;
   }
 }
-
-async function createDir(parentPath: string, name: string) {
-  logger.debug('createDir_. enter:', parentPath, name);
-  //try {
-  //  let res = await MyFsClient.createDir(parentPath, name);
-  //  return res;
-  //} catch (error) {
-  //  logger.error('createDir_ error:', error);
-  //  throw error;
-  //}
-}
 </script>
 
 <style scoped>
@@ -140,7 +134,6 @@ async function createDir(parentPath: string, name: string) {
   flex-direction: column;
   overflow: hidden;
 }
-
 .page-header {
   width: 100%;
   height: 40px;
@@ -151,23 +144,18 @@ async function createDir(parentPath: string, name: string) {
   justify-content: flex-start;
   align-items: center;
 }
-
 .selected-folder-line {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
 }
-
 .file-selector-selected-folder {
   flex: 1;
-  margin-left: 10px;
 }
-
 .file-selector-new-folder {
   justify-self: flex-end;
 }
-
 .file-selector-dir-tree {
   overflow: scroll;
   height: 100%;

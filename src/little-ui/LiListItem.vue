@@ -1,24 +1,22 @@
+<template>
+  <div class="li-list-item__container">
+    <slot name="left"></slot>
+
+    <div class="li-list-item__middle">
+      <span class="li-list-item__title">{{ title }}</span>
+      <span class="li-list-item__description">{{ description }}</span>
+    </div>
+
+    <slot name="right"></slot>
+  </div>
+</template>
+
 <script setup lang="ts">
 defineProps<{
-  title: string,
-  description: string,
-}>()
+  title: string;
+  description: string;
+}>();
 </script>
-
-<template>
-
-<div class="li-list-item__container">
-  <slot name=left></slot>
-
-  <div class="li-list-item__middle">
-    <span class="li-list-item__title">{{ title }}</span>
-    <span class="li-list-item__description">{{ description }}</span>
-  </div>
-
-  <slot name=right></slot>
-</div>
-
-</template>
 
 <style>
 .li-list-item__container {

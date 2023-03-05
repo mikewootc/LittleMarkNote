@@ -1,10 +1,10 @@
 <template>
-  <q-btn flat round :icon="icon" class="general-icon-button" />
+  <q-input />
 </template>
 
 <script setup lang="ts">
 defineProps<{
-  icon: string;
+  //text?: string;
 }>();
 </script>
 
