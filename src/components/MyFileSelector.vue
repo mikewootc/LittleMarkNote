@@ -1,32 +1,36 @@
 <!-- Open/Create vaults -->
 <template>
-  <div class="selected-folder-line">
-    <p class="file-selector-selected-folder">{{ selectedFolder }}</p>
-    <li-button flat icon="create_new_folder" label="" class="file-selector-new-folder" @click="onClickCreateNewDir"></li-button>
-  </div>
-  <div class="file-selector-dir-tree">
-    <!-- prettier-ignore -->
-    <q-tree ref="treeRef" v-model:selected="selectedKey" label-key="name" node-key="path" :nodes="folderTree" dense
-        accordion default-expand-all style="width: 100%" @lazy-load="onLazyLoad" @update:selected="onSelectedFolder">
-        <template v-slot:default-header="prop">
-          <div class="row items-center">
-            <q-icon class="q-mr-sm" :name="prop.node.icon" :style="{ color: prop.node.iconColor }" outline size="20px" />
-            <div>{{ prop.node.name }}</div>
-          </div>
-        </template>
-      </q-tree>
+  <div class="file-selector-inner">
+    <div class="selected-folder-line">
+      <p class="file-selector-selected-folder">{{ selectedFolder }}</p>
+      <li-button flat icon="create_new_folder" label="" class="file-selector-new-folder" @click="onClickCreateNewDir"></li-button>
+    </div>
+    <div class="file-selector-dir-tree">
+      <!-- prettier-ignore -->
+      <q-tree ref="treeRef" v-model:selected="selectedKey" label-key="name" node-key="path" :nodes="folderTree" dense
+          accordion default-expand-all style="width: 100%" @lazy-load="onLazyLoad" @update:selected="onSelectedFolder">
+          <template v-slot:default-header="prop">
+            <div class="row items-center">
+              <q-icon class="q-mr-sm" :name="prop.node.icon" :style="{ color: prop.node.iconColor }" outline size="20px" />
+              <div>{{ prop.node.name }}</div>
+            </div>
+          </template>
+        </q-tree>
+    </div>
   </div>
 
-  <lm-confirm-dialog v-model="isShowNewDirModal" :onConfirm="createDir(selectedFolder, newDirName)">
-    <li-input v-model="newDirName" :label="$t('fileSelector.newDirHolder')" style="width: 400px; height: 300px; background-color: #ff0"></li-input>
+  <lm-confirm-dialog v-model="isShowNewDirModal" @onConfirm="onConfirmCreateDir(selectedFolder, newDirName)">
+    <li-input v-model="newDirName" :label="$t('fileSelector.newDirHolder')" style="width: 400px"></li-input>
+    <div v-if="isShowNewDirNoNamePrompt">{{ $t('fileSelector.newDirNoNamePrompt') }}</div>
   </lm-confirm-dialog>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, reactive } from 'vue';
+import { ref, onMounted, reactive, inject } from 'vue';
 import { useI18n } from 'vue-i18n';
 // @ts-ignore
 import Logger from 'cpclog';
+import { Notify } from 'quasar';
 import logoUrl from '@/assets/images/logo_unicorn_color.svg';
 import MyFsClient from '../models/MyFsClient';
 import type { MyFileInfo } from '../../common/MyFsTypes';
@@ -38,12 +42,16 @@ const logger = Logger.createWrapper('MyFilleSelector', Logger.LEVEL_DEBUG);
 //defineProps<{
 //  msg: string
 //}>()
+
+// @ts-ignore
+const toast: Function = inject('toast');
 const confirm = ref(true);
 let folderTree = reactive([]);
 let selectedKey = reactive([]);
 let selectedFolder = ref('/');
 let newDirName = ref('');
 let isShowNewDirModal = ref(false);
+let isShowNewDirNoNamePrompt = ref(false);
 
 const { locale } = useI18n({ useScope: 'global' });
 
@@ -60,7 +68,15 @@ onMounted(async () => {
 });
 
 function onClickCreateNewDir() {
+  //$q.notify('Message');
+  //Notify.create('Danger, Will Robinson! Danger!');
+  toast('hello', 'world');
   logger.debug('onClickCreateNewDir_', isShowNewDirModal.value);
+
+  if (!selectedFolder) {
+    //$q.notify('Message');
+  }
+
   isShowNewDirModal.value = true;
 }
 
@@ -117,23 +133,29 @@ async function browseDir(path: string) {
   }
 }
 
-async function createDir(parentPath: string, name: string) {
-  logger.debug('createDir_. enter:', parentPath, name);
-  //try {
-  //  let res = await MyFsClient.createDir(parentPath, name);
-  //  return res;
-  //} catch (error) {
-  //  logger.error('createDir_ error:', error);
-  //  throw error;
-  //}
+async function onConfirmCreateDir(parentPath: string, name: string) {
+  logger.debug('onConfirmCreateDir_. enter:', parentPath, name);
+  if (!parentPath) {
+    isShowNewDirNoNamePrompt.value = true;
+    return;
+  }
+
+  try {
+    let res = await MyFsClient.createDir(parentPath, name);
+    return res;
+  } catch (error) {
+    logger.error('createDir_ error:', error);
+    throw error;
+  }
 }
 </script>
 
 <style scoped>
 .file-selector-inner {
-  width: 800px;
+  flex: 1;
+  /* width: 800px; */
   /* max-width: 90vw; */
-  height: 650px;
+  /* height: 650px; */
   background-color: #fff;
 
   display: flex;

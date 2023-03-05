@@ -12,7 +12,7 @@
       }
     "
   >
-    <lm-confirm-box :title="attrs.title" class="lm-confirm-dialog-inner" @onConfirm="onClickConfirm" @onCancel="onClickCancel">
+    <lm-confirm-box :style="style" :title="title" class="lm-confirm-dialog-inner" @onConfirm="onClickConfirm" @onCancel="onClickCancel">
       <slot></slot>
     </lm-confirm-box>
   </li-modal-base>
@@ -33,6 +33,8 @@ const emit = defineEmits(['update:modelValue', 'onConfirm', 'onCancel']);
 
 defineProps<{
   modelValue?: boolean;
+  title?: string;
+  style?: object;
 }>();
 
 onMounted(async () => {
@@ -43,24 +45,26 @@ onMounted(async () => {
   }
 });
 
-const theValue = computed({
-  get() {
-    return attrs.modelValue;
-  },
-  set(value) {
-    logger.debug('set modelValue');
-    emit('update:modelValue', value);
-  },
-});
+//const theValue = computed({
+//  get() {
+//    return attrs.modelValue;
+//  },
+//  set(value) {
+//    logger.debug('set modelValue');
+//    emit('update:modelValue', value);
+//  },
+//});
 
 function onClickConfirm() {
-  theValue.value = false;
+  //theValue.value = false;
   emit('onConfirm');
+  //emit('update:modelValue', false);
 }
 
 function onClickCancel() {
-  theValue.value = false;
+  //theValue.value = false;
   emit('onCancel');
+  //emit('update:modelValue', false);
 }
 </script>
 

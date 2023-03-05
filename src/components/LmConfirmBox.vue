@@ -36,9 +36,9 @@ onMounted(async () => {
 
 <style scoped>
 .lm-confirm-box {
-  width: 800px;
+  /* width: 800px; */
   /* max-width: 90vw; */
-  height: 650px;
+  /* height: 650px; */
   background-color: #fff;
 
   display: flex;

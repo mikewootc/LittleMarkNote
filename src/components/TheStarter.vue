@@ -32,7 +32,7 @@
         </div>
       </div>
 
-      <lm-confirm-dialog v-model="isShowFileExplorer" class="starter__dialog">
+      <lm-confirm-dialog style="width: 800px; height: 650px" :title="$t('fileSelector.title')" v-model="isShowFileExplorer" class="starter__dialog">
         <MyFileSelector></MyFileSelector>
       </lm-confirm-dialog>
     </div>
