@@ -28,5 +28,6 @@ export default {
     title                             : '选择文件夹',
     newDirHolder                      : '输入文件夹名称',
     newDirNoNamePrompt                : '请输入文件夹名',
+    newDirNoSelectPrompt              : '请先选择父级文件夹',
   },
 };

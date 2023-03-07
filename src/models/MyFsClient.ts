@@ -42,6 +42,7 @@ export default class MyFsClient {
       }
     } catch (error) {
       logger.error('createDir_ error:', error);
+      // TODO: error handling
       throw error;
     }
   }

@@ -19,9 +19,9 @@
     </div>
   </div>
 
-  <lm-confirm-dialog v-model="isShowNewDirModal" @onConfirm="onConfirmCreateDir(selectedFolder, newDirName)">
+  <lm-confirm-dialog v-model="isShowNewDirModal" @onConfirm="onConfirmCreateDir(selectedFolder, newDirName)" @onCancel="onCancelCreateDir()">
     <li-input v-model="newDirName" :label="$t('fileSelector.newDirHolder')" style="width: 400px"></li-input>
-    <div v-if="isShowNewDirNoNamePrompt">{{ $t('fileSelector.newDirNoNamePrompt') }}</div>
+    <div v-if="isShowNewDirNoNamePrompt" style="color: red">{{ $t('fileSelector.newDirNoNamePrompt') }}</div>
   </lm-confirm-dialog>
 </template>
 
@@ -53,7 +53,7 @@ let newDirName = ref('');
 let isShowNewDirModal = ref(false);
 let isShowNewDirNoNamePrompt = ref(false);
 
-const { locale } = useI18n({ useScope: 'global' });
+const { t } = useI18n({ useScope: 'global' });
 
 onMounted(async () => {
   try {
@@ -68,16 +68,39 @@ onMounted(async () => {
 });
 
 function onClickCreateNewDir() {
-  //$q.notify('Message');
-  //Notify.create('Danger, Will Robinson! Danger!');
-  toast('hello', 'world');
-  logger.debug('onClickCreateNewDir_', isShowNewDirModal.value);
-
-  if (!selectedFolder) {
-    //$q.notify('Message');
+  logger.debug('onClickCreateNewDir_. enter.', isShowNewDirModal.value, selectedKey);
+  if (!selectedFolder || selectedFolder.value === '/') {
+    logger.error('onClickCreateNewDir_. error: no selected folder.');
+    toast(t('fileSelector.newDirNoSelectPrompt'));
+    return;
   }
 
   isShowNewDirModal.value = true;
+}
+
+async function onConfirmCreateDir(parentPath: string, name: string) {
+  logger.debug('onConfirmCreateDir_. enter:', parentPath, name);
+  if (!name) {
+    logger.error('onConfirmCreateDir_. error: no parentPath.');
+    isShowNewDirNoNamePrompt.value = true;
+    return;
+  }
+
+  try {
+    isShowNewDirNoNamePrompt.value = false;
+    let res = await MyFsClient.createDir(parentPath, name);
+    logger.debug('onConfirmCreateDir_. createDir_ res:', res);
+    isShowNewDirModal.value = false;
+  } catch (error) {
+    logger.error('onConfirmCreateDir_. createDir_ error:', error);
+    // TODO: error handling
+  }
+}
+
+async function onCancelCreateDir() {
+  logger.debug('onCancelCreateDir_. enter.');
+  isShowNewDirModal.value = false;
+  isShowNewDirNoNamePrompt.value = false;
 }
 
 async function onSelectedFolder(absolutePath: string) {
@@ -129,22 +152,6 @@ async function browseDir(path: string) {
     return lstDirContents;
   } catch (error) {
     logger.error('browseDir_ error:', error);
-    throw error;
-  }
-}
-
-async function onConfirmCreateDir(parentPath: string, name: string) {
-  logger.debug('onConfirmCreateDir_. enter:', parentPath, name);
-  if (!parentPath) {
-    isShowNewDirNoNamePrompt.value = true;
-    return;
-  }
-
-  try {
-    let res = await MyFsClient.createDir(parentPath, name);
-    return res;
-  } catch (error) {
-    logger.error('createDir_ error:', error);
     throw error;
   }
 }

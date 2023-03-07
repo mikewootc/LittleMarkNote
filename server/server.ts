@@ -21,18 +21,18 @@ export async function startServer() {
       res.json(dirInfo);
     } catch (error) {
       logger.error('/fs/browse-dir:', error);
-      res.json({code: '1'});
+      res.json({ code: '1' });
     }
   });
 
   server.post('/fs/create-dir', async (req, res) => {
     try {
-      console.log('req:', req);
-      let ret = await MyFs.createDir(req.body.parentPath, req.body.dirName);
+      console.log('req:', req.body);
+      let ret = await MyFs.createDir(req.body.parentPath, req.body.name);
       res.json(ret);
     } catch (error) {
       logger.error('/fs/create-dir:', error);
-      res.json({code: '2'});
+      res.json({ code: '2' });
     }
   });
 
